@@ -39,7 +39,13 @@ else()
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    DatabaseManager.h
+    DatabaseManager.cpp
   )
 endif()
 
 target_link_libraries(SimpleContractRegister PRIVATE Qt5::Widgets)
+find_package(Qt5 REQUIRED COMPONENTS Core Sql)  # Для Qt5
+
+target_link_libraries(SimpleContractRegister PRIVATE Qt5::Core Qt5::Sql)
+
