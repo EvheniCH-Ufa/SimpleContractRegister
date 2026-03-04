@@ -43,6 +43,8 @@ else()
     DatabaseManager.cpp
     TableModelClass_Head.h
     TableModelClass_Head.cpp
+
+    BackLog.txt          # бэклог
   )
 endif()
 
