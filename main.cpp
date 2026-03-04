@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    // connectimsay
+    // connectimsya
     if (!DatabaseManager::instance().openConnection())
     {
         QMessageBox::critical(nullptr, "Ошибка!", "Не удалось подключиться к БД\n"

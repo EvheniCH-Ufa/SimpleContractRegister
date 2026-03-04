@@ -9,6 +9,9 @@ TableModel_Head::TableModel_Head(QObject *parent, QSqlDatabase database)
 void TableModel_Head::initialize()
 {
     setTable("Contracts");
+    setHeaderData(0, Qt::Horizontal, "ID");
+    setHeaderData(1, Qt::Horizontal, "ID1");
+    setHeaderData(2, Qt::Horizontal, "ID2");
     setEditStrategy(QSqlTableModel::OnFieldChange);
     select();
 }
@@ -43,7 +46,7 @@ QVariant TableModel_Head::data(const QModelIndex &index, int role) const
         {
             case 0: // номер строки
             {
-                return Qt::AlignRight | Qt::AlignVCenter;
+                return QVariant( Qt::AlignRight | Qt::AlignVCenter);
             }
             case 1: // номер строки
             {

@@ -41,6 +41,8 @@ else()
     mainwindow.ui
     DatabaseManager.h
     DatabaseManager.cpp
+    TableModelClass_Head.h
+    TableModelClass_Head.cpp
   )
 endif()
 
