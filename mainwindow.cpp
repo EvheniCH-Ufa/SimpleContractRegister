@@ -60,6 +60,8 @@ void MainWindow::setupTableView()
 
 void MainWindow::on_addContract_Bttn_clicked()
 {
+    QMessageBox::warning(this,"Errorапвап", "Failed to add row:");
+
     int row = m_model->rowCount();
     m_model->insertRow(row);
 
@@ -69,6 +71,58 @@ void MainWindow::on_addContract_Bttn_clicked()
     m_model->setData(m_model->index(row, 3), "Без отдела");
     m_model->setData(m_model->index(row, 4), 30000);
 
+    // save in bd
+    if (m_model->submitAll())
+    {
+        //update proxy-model
+        m_proxyModel->invalidate();
+        // find new row in proxy-model and selec his
+        for (int i = 0; i < m_proxyModel->rowCount(); ++i)
+        {
+            const int prModData = m_proxyModel->data(m_proxyModel->index(i, 0)).toInt();
+            const int   ModData = m_model->data(m_proxyModel->index(i, 0)).toInt();
+            if (prModData == ModData)
+            {
+                ui->contractTableView->selectRow(i);
+                break;
+            }
+        }
+    }
+    else
+    {
+        QMessageBox::warning(this,"Error", "Failed to add row: " + m_model->lastError().text());
+    }
+
+    //updateButtonState();
+}
+
+void MainWindow::on_delContract_Bttn_clicked()
+{
+
+}
+
+void MainWindow::on_editContract_Bttn_clicked()
+{
+
+}
+
+void MainWindow::on_refreshContract_Bttn_clicked()
+{
+
+}
+
+void MainWindow::on_searchEdit_textChanged(const QString &text)
+{
+
+}
+
+void MainWindow::on_filterCombo_currentIndexChanged(int index)
+{
+
+}
+
+void MainWindow::on_tableView_clicked(const QModelIndex &index)
+{
 
 }
 
