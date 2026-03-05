@@ -45,6 +45,7 @@ else()
     TableModelClass_Head.cpp
 
     BackLog.txt          # бэклог
+    InfoDataModel.txt    # файл с информационной моделью данных -
   )
 endif()
 

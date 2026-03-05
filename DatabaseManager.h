@@ -31,12 +31,17 @@ public:
     bool commitTransaction();
     bool rollbackTransaction();
 
+    bool checkTables();
+
 private:
     DatabaseManager();
     ~DatabaseManager();
 
     static DatabaseManager *m_instance;
     static QMutex m_mutex;
+
+    bool createContractsTable();
+
 
     QSqlDatabase m_database;
     bool m_isConnected;

@@ -135,3 +135,62 @@ bool DatabaseManager::rollbackTransaction()
     return m_database.isOpen() ? m_database.rollback() : false;
 }
 
+bool DatabaseManager::checkTables()
+{
+    return createContractsTable();
+}
+
+bool DatabaseManager::createContractsTable()
+{
+    if (!isOpen())
+    {
+        return false;
+    }
+
+    QSqlQuery query(m_database);
+    const QString tableName = "Contracts";
+
+    bool success = query.exec(
+            "CREATE TABLE IF NOT EXISTS " + tableName + " ("
+            "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+            "number           TEXT NOT NULL UNIQUE, "
+            "description      TEXT,"
+            "contragent_id    INTEGER DEFAULT 1,"
+            "date             DATETIME,"
+            "total_cost       REAL,"
+            "cost_implem_fact REAL,"
+            "cost_implem_docs REAL,"
+            "is_active        INTEGER DEFAULT 1"
+            ")");
+
+    if (success)
+    {
+        QSqlQuery checkTableQuery( "SELECT COUNT(*) FROM " + tableName, m_database);
+        if (checkTableQuery.next() && checkTableQuery.value(0).toInt() == 0) // выборка есть и количество 0
+        {
+            query.e
+        }
+    }
+
+/*
+            ******************************
+            *       Contracts            *
+            ******************************
+            * id (uint)                  *
+            * Number (str)               *
+            * Description (str)          *
+            * Contragent_id (uint)       *
+            * Date (datetime)            *
+            * Summ (double)              *
+            * Summ_implem_fackt (double) *
+            * Summ_implem_docs (double)  *
+            * is_active (bool)           *
+            ******************************
+
+
+            */
+
+
+    return 1;
+}
+
