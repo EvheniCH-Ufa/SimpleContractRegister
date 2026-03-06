@@ -4,37 +4,23 @@
 * id (INTEGER PRIMARY KEY AUTOINCREMENT) *
 * number           (TEXT)                *
 * description      (TEXT)                *
-* contragent_id    (INTEGER)             *
-* date             (DATETIME)            *
-* total_cost       (REAL)                *
-* cost_implem_fact (REAL)                *
-* cost_implem_docs (REAL)                *
-* is_active        (INTEGER)             *
-******************************************
-
-
-"id INTEGER , "
-"           TEXT NOT NULL UNIQUE, "
-"      ,"
-"     DEFAULT 1,"
-"             ,"
-"       ,"
-" REAL,"
-" REAL,"
-"is_active         DEFAULT 1"
-")");
-
-
-
-
-******************************
-*       Contragents          *
-******************************
-* id (uint)                  *
-* Name (str)                 *
-* Adress (str)               *
-* Email (str)                *
-* Phone (longint)            *
-* ContactPerson (str)        *
-* ContactPhone (longint)     *
+* contragent_id    (INTEGER)             *<-+
+* date             (DATETIME)            *  |
+* total_cost       (REAL)                *  |
+* cost_implem_fact (REAL)                *  |
+* cost_implem_docs (REAL)                *  |
+* is_active        (INTEGER)             *  |
+******************************************  |
+                                            |
+                                            |
+******************************              |
+*       Contragents          *              |
+******************************              |
+* id (uint)                  *>-------------+
+* name (str)                 *
+* adress (str)               *
+* e_mail (str)               *
+* phone (longint)            *
+* contactPerson (str)        *
+* contactPhone (longint)     *
 ******************************

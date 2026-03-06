@@ -168,29 +168,60 @@ bool DatabaseManager::createContractsTable()
         QSqlQuery checkTableQuery( "SELECT COUNT(*) FROM " + tableName, m_database);
         if (checkTableQuery.next() && checkTableQuery.value(0).toInt() == 0) // выборка есть и количество 0
         {
-            query.e
+            query.exec("INSERT INTO " + tableName + " (number) VALUES ('One')");
+            query.exec("INSERT INTO " + tableName + " (number) VALUES ('Two')");
         }
     }
+    return  success;
+}
+
+bool DatabaseManager::createContragentsTable()
+{
+    if (!isOpen())
+    {
+        return false;
+    }
+
+    QSqlQuery query(m_database);
+    const QString tableName = "Contragents";
+
+    bool success = query.exec(
+            "CREATE TABLE IF NOT EXISTS " + tableName + " ("
+            "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+            "name            TEXT NOT NULL UNIQUE, "
+            "adress          TEXT,"
+            "e_mail          TEXT,"
+            "phone           INTEGER,"
+            "contactPerson   TEXT,"
+            "contactPhone    INTEGER"
+            ")");
 
 /*
-            ******************************
-            *       Contracts            *
-            ******************************
-            * id (uint)                  *
-            * Number (str)               *
-            * Description (str)          *
-            * Contragent_id (uint)       *
-            * Date (datetime)            *
-            * Summ (double)              *
-            * Summ_implem_fackt (double) *
-            * Summ_implem_docs (double)  *
-            * is_active (bool)           *
-            ******************************
+******************************
+*       Contragents          *
+******************************
+* id (uint)                  *
+* name (str)                 *
+* adress (str)               *
+* e_mail (str)               *
+* phone (longint)            *
+* contactPerson (str)        *
+* contactPhone (longint)     *
+******************************
+
+*/
 
 
-            */
 
-
-    return 1;
+    if (success)
+    {
+        QSqlQuery checkTableQuery( "SELECT COUNT(*) FROM " + tableName, m_database);
+        if (checkTableQuery.next() && checkTableQuery.value(0).toInt() == 0) // выборка есть и количество 0
+        {
+            query.exec("INSERT INTO " + tableName + " (number) VALUES ('One')");
+            query.exec("INSERT INTO " + tableName + " (number) VALUES ('Two')");
+        }
+    }
+    return  success;
 }
 

@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
                               + DatabaseManager::instance().getLastError().text());
         return 1;
     }
+    DatabaseManager::instance().checkTables();
 
     MainWindow w;
     w.show();

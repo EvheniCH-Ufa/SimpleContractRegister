@@ -41,6 +41,7 @@ private:
     static QMutex m_mutex;
 
     bool createContractsTable();
+    bool createContragentsTable();
 
 
     QSqlDatabase m_database;
