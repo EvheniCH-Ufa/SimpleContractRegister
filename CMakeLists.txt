@@ -36,14 +36,29 @@ if(ANDROID)
 else()
   add_executable(SimpleContractRegister
     main.cpp
+
+    # DatabaseManager общий
+    DatabaseManager.h
+    DatabaseManager.cpp
+
+    ## СПИСОК КОНТРАКТОВ
+    # главная форма (форма списка контрактов)
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
-    DatabaseManager.h
-    DatabaseManager.cpp
+
+    # модель таблицы для списка контрактов (главной формы)
     TableModelClass_Head.h
     TableModelClass_Head.cpp
 
+    ## СПИСОК КОНТРАГЕНТОВ
+    # форма списка контрагентов
+    ContragentsListDialog.h
+    ContragentsListDialog.cpp
+    ContragentsListDialog.ui
+
+
+    # ВСПОМОГАТЕЛЬНЫЕ ФАЙЛЫ
     BackLog.txt          # бэклог
     InfoDataModel.txt    # файл с информационной моделью данных -
   )
