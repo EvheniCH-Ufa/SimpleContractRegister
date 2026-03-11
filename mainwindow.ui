@@ -81,8 +81,32 @@
      <height>26</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>Файл</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>Данные</string>
+    </property>
+    <widget class="QMenu" name="menu_3">
+     <property name="title">
+      <string>Справочники</string>
+     </property>
+     <addaction name="actionOpenContragentsList"/>
+    </widget>
+    <addaction name="menu_3"/>
+   </widget>
+   <addaction name="menu"/>
+   <addaction name="menu_2"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionOpenContragentsList">
+   <property name="text">
+    <string>Контрагенты</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

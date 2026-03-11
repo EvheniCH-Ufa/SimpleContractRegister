@@ -59,6 +59,20 @@
          </property>
         </spacer>
        </item>
+       <item>
+        <widget class="QPushButton" name="refreshContragent_Bttn_3">
+         <property name="text">
+          <string>Выбрать</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="refreshContragent_Bttn_2">
+         <property name="text">
+          <string>Закрыть</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
      <item row="0" column="0">

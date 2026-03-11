@@ -57,6 +57,10 @@ else()
     ContragentsListDialog.cpp
     ContragentsListDialog.ui
 
+    # модель таблицы для списка контрагентов
+    TableModelClass_Contragents.h
+    TableModelClass_Contragents.cpp
+
 
     # ВСПОМОГАТЕЛЬНЫЕ ФАЙЛЫ
     BackLog.txt          # бэклог

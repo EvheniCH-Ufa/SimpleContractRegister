@@ -1,26 +1,38 @@
-#include "TableModelClass_Head.h"
-#include<QDebug>
+#include "TableModelClass_Contragents.h"
 #include<QMessageBox>
 
-TableModel_Head::TableModel_Head(QObject *parent, QSqlDatabase database)
+TableModel_Contragents::TableModel_Contragents(QObject *parent, QSqlDatabase database)
     : QSqlTableModel(parent, database)
-{
-    qDebug() << "initialize()\n";
-    QMessageBox::warning(nullptr, "sdf", "dgfsd");
+{    
     initialize();
 }
 
-void TableModel_Head::initialize()
+void TableModel_Contragents::initialize()
 {
-    setTable("Contracts");
+    setTable("Contragents");
     setHeaderData(0, Qt::Horizontal, "ID");
-    setHeaderData(1, Qt::Horizontal, "ID1");
+    setHeaderData(1, Qt::Horizontal, "Наименование");
     setHeaderData(2, Qt::Horizontal, "ID2");
     setEditStrategy(QSqlTableModel::OnFieldChange);
     select();
+
+
+    /*
+******************************              |
+*       Contragents          *              |
+******************************              |
+* id (uint)                  *>-------------+
+* name (str)                 *
+* adress (str)               *
+* e_mail (str)               *
+* phone (longint)            *
+* contactPerson (str)        *
+* contactPhone (longint)     *
+******************************
+*/
 }
 
-QVariant TableModel_Head::data(const QModelIndex &index, int role) const
+QVariant TableModel_Contragents::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
     {
@@ -62,7 +74,7 @@ QVariant TableModel_Head::data(const QModelIndex &index, int role) const
     return QSqlTableModel::data(index, role);
 }
 
-QVariant TableModel_Head::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant TableModel_Contragents::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole)
     {
@@ -79,7 +91,7 @@ QVariant TableModel_Head::headerData(int section, Qt::Orientation orientation, i
     return QSqlTableModel::headerData(section, orientation, role);
 }
 
-void TableModel_Head::setDepartmentFilter(int departmentId)
+void TableModel_Contragents::setDepartmentFilter(int departmentId)
 {
     if (departmentId > 0)
     {
@@ -92,7 +104,7 @@ void TableModel_Head::setDepartmentFilter(int departmentId)
     select();
 }
 
-void TableModel_Head::searchEmployees(const QString &searchText)
+void TableModel_Contragents::searchEmployees(const QString &searchText)
 {
     if (searchText.isEmpty())
     {
@@ -106,4 +118,6 @@ void TableModel_Head::searchEmployees(const QString &searchText)
     }
     select();
 }
+
+
 

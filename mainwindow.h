@@ -7,6 +7,10 @@
 #include <QSqlTableModel>
 #include <QSortFilterProxyModel>
 
+#include "TableModelClass_Head.h"
+
+#include"ContragentsListDialog.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -39,13 +43,19 @@ private slots:
     // Слот для выделения
     void on_tableView_clicked(const QModelIndex &index);
 
+    // Слот для открытия формы списка контрагентов
+    void onOpenContragentsList();
+
 
 private:
+    Ui::MainWindow *ui;
+
+    ContragentsListDialog *m_contragentsDialog = nullptr;
+
     void setupTableView();        // настройка внешнего вида
     void setupProxyModel();       // настройка прокси-модели
     void updateButtonState();     // обновление состояния кнопок
 
-    Ui::MainWindow *ui;
 
     QSqlTableModel *m_model;             // модель
     QSortFilterProxyModel *m_proxyModel; // прокси для фильтрации

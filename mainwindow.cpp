@@ -14,21 +14,23 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // sozdaem model
-    m_model = new QSqlTableModel(this, DatabaseManager::instance().database());
+    // svazka menu "Data-Spravochnik-Kontragent" c metodom
+    connect(ui->actionOpenContragentsList, &QAction::triggered, this, &MainWindow::onOpenContragentsList);
 
-    // этот блок наверное в контсруктор модели
-    m_model->setTable("Contracts");
-    m_model->setHeaderData(0, Qt::Horizontal, "ID");
-    m_model->setHeaderData(1, Qt::Horizontal, "ID1");
-    m_model->setHeaderData(2, Qt::Horizontal, "ID2");
-    m_model->select();
+    // sozdanie dialoga kontragentov
+    m_contragentsDialog = new ContragentsListDialog(this);
+    m_contragentsDialog->setWindowTitle("Справочник контрагентов");
+
+
+
+    // подключаем модель контрактов
+    m_model = new TableModel_Head (this, DatabaseManager::instance().database());
 
     // настраиваем прокси модель
     m_proxyModel->setSourceModel(m_model);
     ui->contractTableView->setModel(m_model);
 
-    setupTableView();
+    setupTableView(); // настройка вида таблицы
 }
 
 MainWindow::~MainWindow()
@@ -45,7 +47,7 @@ void MainWindow::setupTableView()
     ui->contractTableView->setSortingEnabled(true);
 
     // width of coluns
-    ui->contractTableView->setColumnWidth(0, 60);
+    ui->contractTableView->setColumnWidth(0, 160);
     ui->contractTableView->setColumnWidth(1, 60);
     ui->contractTableView->setColumnWidth(2, 60);
     ui->contractTableView->setColumnWidth(3, 60);
@@ -123,6 +125,28 @@ void MainWindow::on_filterCombo_currentIndexChanged(int index)
 
 void MainWindow::on_tableView_clicked(const QModelIndex &index)
 {
+
+}
+
+void MainWindow::onOpenContragentsList()
+{
+    // Создаем экземпляр диалога
+ //   ContragentsListDialog dialog(this);
+
+    // Устанавливаем заголовок (опционально)
+  //  dialog.setWindowTitle("Справочник контрагентов");
+
+    // Если нужно передать какие-то данные в форму
+    // dialog.setSomeParameter(value);
+
+    // Открываем модально (ждет закрытия)
+    m_contragentsDialog->exec();
+
+    // После закрытия можно получить данные из формы
+    // if (dialog.result() == QDialog::Accepted) {
+    //     QString data = dialog.getSomeData();
+    //     // обработать данные
+    // }
 
 }
 
