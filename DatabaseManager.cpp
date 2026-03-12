@@ -137,7 +137,8 @@ bool DatabaseManager::rollbackTransaction()
 
 bool DatabaseManager::checkTables()
 {
-    return createContractsTable();
+    return createContractsTable()
+            && createContragentsTable();
 }
 
 bool DatabaseManager::createContractsTable()
@@ -211,15 +212,13 @@ bool DatabaseManager::createContragentsTable()
 
 */
 
-
-
     if (success)
     {
         QSqlQuery checkTableQuery( "SELECT COUNT(*) FROM " + tableName, m_database);
         if (checkTableQuery.next() && checkTableQuery.value(0).toInt() == 0) // выборка есть и количество 0
         {
-            query.exec("INSERT INTO " + tableName + " (number) VALUES ('One')");
-            query.exec("INSERT INTO " + tableName + " (number) VALUES ('Two')");
+            query.exec("INSERT INTO " + tableName + " (name) VALUES ('One')");
+            query.exec("INSERT INTO " + tableName + " (name) VALUES ('Two')");
         }
     }
     return  success;
