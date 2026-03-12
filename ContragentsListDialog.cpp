@@ -1,11 +1,33 @@
 #include "ContragentsListDialog.h"
 #include "ui_ContragentsListDialog.h"
+#include "DatabaseManager.h"
 
-ContragentsListDialog::ContragentsListDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::ContragentsListDialog)
+
+ContragentsListDialog::ContragentsListDialog(QWidget *parent)
+  : QDialog(parent)
+  , ui(new Ui::ContragentsListDialog)
+  , m_model(nullptr)  // сначала nullptr
+  , m_proxyModel(new QSortFilterProxyModel(this))
 {
     ui->setupUi(this);
+
+
+    // sozdanie dialoga novogo kontragenta
+//    m_contragentsDialog = new ContragentsListDialog(this);
+//    m_contragentsDialog->setWindowTitle("Справочник контрагентов");
+
+
+
+    // подключаем модель контрактов
+    m_model = new TableModel_Contragents (this, DatabaseManager::instance().database());
+
+    // настраиваем прокси модель
+   // m_proxyModel->setSourceModel(m_model);
+    ui->contragentTableView->setModel(m_model);
+
+    setupTableView(); // настройка вида таблицы
+
+
 }
 
 ContragentsListDialog::~ContragentsListDialog()
@@ -54,21 +76,22 @@ void ContragentsListDialog::on_tableView_clicked(const QModelIndex &index)
 void ContragentsListDialog::setupTableView()
 {
     //vydelenie
-    ui->contractTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
-    ui->contractTableView->setSelectionMode(QAbstractItemView::SingleSelection);
-    ui->contractTableView->setAlternatingRowColors(true);
-    ui->contractTableView->setSortingEnabled(true);
+    ui->contragentTableView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->contragentTableView->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->contragentTableView->setAlternatingRowColors(true);
+    ui->contragentTableView->setSortingEnabled(true);
 
     // width of coluns
-    ui->contractTableView->setColumnWidth(0, 160);
-    ui->contractTableView->setColumnWidth(1, 60);
-    ui->contractTableView->setColumnWidth(2, 60);
-    ui->contractTableView->setColumnWidth(3, 60);
-    ui->contractTableView->setColumnWidth(4, 60);
-    ui->contractTableView->setColumnWidth(5, 60);
+    ui->contragentTableView->setColumnWidth(0, 50);     // "ID"
+    ui->contragentTableView->setColumnWidth(1, 240);    // "Наименование"
+    ui->contragentTableView->setColumnWidth(2, 120);    // "Адрес"
+    ui->contragentTableView->setColumnWidth(3, 80);     // "e_mail"
+    ui->contragentTableView->setColumnWidth(4, 80);     // "Телефон"
+    ui->contragentTableView->setColumnWidth(5, 150);    // "Контактное лицо"
+  //  ui->contragentTableView->setColumnWidth(6, 300);  // "Телефон контактного\nлица"
 
     // poslednij - tyanetsya
-    ui->contractTableView->horizontalHeader()->setStretchLastSection(true);
+    ui->contragentTableView->horizontalHeader()->setStretchLastSection(true);
     // Скрываем ненужные столбцы (если есть)
     // ui->tableView->setColumnHidden(5, true); // скрыть дату приема
 

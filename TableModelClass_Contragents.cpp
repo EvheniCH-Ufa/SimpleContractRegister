@@ -12,7 +12,11 @@ void TableModel_Contragents::initialize()
     setTable("Contragents");
     setHeaderData(0, Qt::Horizontal, "ID");
     setHeaderData(1, Qt::Horizontal, "Наименование");
-    setHeaderData(2, Qt::Horizontal, "ID2");
+    setHeaderData(2, Qt::Horizontal, "Адрес");
+    setHeaderData(3, Qt::Horizontal, "e_mail");
+    setHeaderData(4, Qt::Horizontal, "Телефон");
+    setHeaderData(5, Qt::Horizontal, "Контактное лицо");
+    setHeaderData(6, Qt::Horizontal, "Телефон контактного\nлица");
     setEditStrategy(QSqlTableModel::OnFieldChange);
     select();
 
@@ -62,7 +66,7 @@ QVariant TableModel_Contragents::data(const QModelIndex &index, int role) const
         {
             case 0: // номер строки
             {
-                return QVariant( Qt::AlignRight | Qt::AlignVCenter);
+                return QVariant( Qt::AlignHCenter | Qt::AlignVCenter);
             }
             case 1: // номер строки
             {
@@ -81,10 +85,10 @@ QVariant TableModel_Contragents::headerData(int section, Qt::Orientation orienta
         switch (section)
         {
             case 0: return "ID";
-            case 1: return "ID1";
+        /*    case 1: return "ID1";
             case 2: return "ID2";
             case 3: return "ID3";
-            case 4: return "ID4";
+            case 4: return "ID4";*/
             default: break;
         }
     }
