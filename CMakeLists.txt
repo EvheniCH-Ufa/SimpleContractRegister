@@ -62,9 +62,14 @@ else()
     TableModelClass_Contragents.cpp
 
 
+    ## ФОРМА КОНТРАГЕНТА
+    ContragentDialog.cpp
+    ContragentDialog.h
+    ContragentDialog.ui
+
     # ВСПОМОГАТЕЛЬНЫЕ ФАЙЛЫ
-    BackLog.txt          # бэклог
-    InfoDataModel.txt    # файл с информационной моделью данных -
+    vspom___BackLog.txt          # бэклог
+    vspom___InfoDataModel.txt    # файл с информационной моделью данных -
   )
 endif()
 
