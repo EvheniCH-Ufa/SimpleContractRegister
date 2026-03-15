@@ -9,7 +9,7 @@
 #include <QSortFilterProxyModel>
 
 #include "TableModelClass_Contragents.h"
-
+#include "ContragentDialog.h"
 
 namespace Ui {
 class ContragentsListDialog;
@@ -42,10 +42,14 @@ private slots:
 
 
 
+    void on_addContragent_Bttn_clicked();
+
+    void on_editContragent_Bttn_clicked();
+
 private:
     Ui::ContragentsListDialog *ui;
 
-//    ContragentDialog *m_contragentDialog = nullptr;  // forma novogo kontragenta
+    ContragentDialog *m_contragentDialog = nullptr;  // forma novogo kontragenta
 
 
     void setupTableView();        // настройка внешнего вида

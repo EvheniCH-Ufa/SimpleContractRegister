@@ -6,6 +6,18 @@
 #include <QMutex>
 
 
+struct contragentData
+{
+    long long id;
+    QString name;
+    QString adress;
+    QString e_mail;
+    long long phone;
+    QString contactPerson;
+    long long contactPhone;
+};
+
+
 class DatabaseManager
 {
 public:

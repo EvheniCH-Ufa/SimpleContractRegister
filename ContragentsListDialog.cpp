@@ -1,6 +1,7 @@
 #include "ContragentsListDialog.h"
 #include "ui_ContragentsListDialog.h"
 #include "DatabaseManager.h"
+#include "QMessageBox"
 
 
 ContragentsListDialog::ContragentsListDialog(QWidget *parent)
@@ -13,10 +14,8 @@ ContragentsListDialog::ContragentsListDialog(QWidget *parent)
 
 
     // sozdanie dialoga novogo kontragenta
-//    m_contragentsDialog = new ContragentsListDialog(this);
-//    m_contragentsDialog->setWindowTitle("Справочник контрагентов");
-
-
+    m_contragentDialog = new ContragentDialog(this);
+//    m_contragentDialog->setWindowTitle("Контрагент");
 
     // подключаем модель контрактов
     m_model = new TableModel_Contragents (this, DatabaseManager::instance().database());
@@ -108,3 +107,39 @@ void ContragentsListDialog::updateButtonState()
 }
 
 
+
+void ContragentsListDialog::on_addContragent_Bttn_clicked()
+{
+   m_contragentDialog->exec();
+}
+
+void ContragentsListDialog::on_editContragent_Bttn_clicked()
+{
+    QModelIndexList selectedRows = ui->contragentTableView->selectionModel()->selectedRows();
+
+    if (selectedRows.isEmpty())
+    {
+        QMessageBox::warning(this, "Внимание", "Выберите контрагента для редактирования");
+        return;
+    }
+
+    // Берем первую выделенную строку
+    QModelIndex index = selectedRows.first();
+    int row = index.row();
+
+    contragentData data;
+    // Получаем данные из модели
+    const auto model = ui->contragentTableView->model();
+    data.id            = model->data(model->index(row, 0)).toString().toULongLong();   // колонка с id
+    data.name          = model->data(model->index(row, 1)).toString();      // колонка с именем
+    data.adress        = model->data(model->index(row, 2)).toString();
+    data.e_mail        = model->data(model->index(row, 3)).toString();
+    data.phone         = model->data(model->index(row, 4)).toULongLong();
+    data.contactPerson = model->data(model->index(row, 5)).toString();
+    data.contactPhone  = model->data(model->index(row, 6)).toULongLong();
+
+    m_contragentDialog->setData(data);
+    m_contragentDialog->setWindowTitle("Изменение контрагента " + data.name);
+
+    m_contragentDialog->exec();
+}

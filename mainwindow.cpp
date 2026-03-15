@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     // svazka menu "Data-Spravochnik-Kontragent" c metodom
     connect(ui->actionOpenContragentsList, &QAction::triggered, this, &MainWindow::onOpenContragentsList);
 
-    // sozdanie dialoga kontragentov
+    // sozdanie dialoga spiska kontragentov
     m_contragentsDialog = new ContragentsListDialog(this);
     m_contragentsDialog->setWindowTitle("Справочник контрагентов");
 
@@ -62,8 +62,6 @@ void MainWindow::setupTableView()
 
 void MainWindow::on_addContract_Bttn_clicked()
 {
-    QMessageBox::warning(this,"Errorапвап", "Failed to add row:");
-
     int row = m_model->rowCount();
     m_model->insertRow(row);
 

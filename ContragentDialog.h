@@ -2,6 +2,7 @@
 #define CONTRAGENTDIALOG_H
 
 #include <QDialog>
+#include "DatabaseManager.h"
 
 namespace Ui {
 class ContragentDialog;
@@ -15,8 +16,16 @@ public:
     explicit ContragentDialog(QWidget *parent = nullptr);
     ~ContragentDialog();
 
+    void setData(const contragentData &data);
+
+private slots:
+    void on_cancel_Bttn_clicked();
+
+    void on_ok_Bttn_clicked();
+
 private:
     Ui::ContragentDialog *ui;
+
 };
 
 #endif // CONTRAGENTDIALOG_H

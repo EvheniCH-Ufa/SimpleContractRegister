@@ -67,6 +67,7 @@ else()
     ContragentDialog.h
     ContragentDialog.ui
 
+
     # ВСПОМОГАТЕЛЬНЫЕ ФАЙЛЫ
     vspom___BackLog.txt          # бэклог
     vspom___InfoDataModel.txt    # файл с информационной моделью данных -
