@@ -1,62 +1,22 @@
-#ifndef CONTRAGENTSLISTDIALOG_H
-#define CONTRAGENTSLISTDIALOG_H
+#ifndef CONTRAGENTDIALOG_H
+#define CONTRAGENTDIALOG_H
 
 #include <QDialog>
-#include <QMainWindow>
-
-#include <QWidget>
-#include <QSqlTableModel>
-#include <QSortFilterProxyModel>
-
-#include "TableModelClass_Contragents.h"
-
 
 namespace Ui {
-class ContragentsListDialog;
+class ContragentDialog;
 }
 
-class ContragentsListDialog : public QDialog
+class ContragentDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit ContragentsListDialog(QWidget *parent = nullptr);
-    ~ContragentsListDialog();
-
-private slots:
-    // Слоты для кнопок
-    void on_addContract_Bttn_clicked();
-    void on_delContract_Bttn_clicked();
-    void on_editContract_Bttn_clicked();
-    void on_refreshContract_Bttn_clicked();
-
-    // Слоты для фильтрации
-    void on_searchEdit_textChanged(const QString &text);
-    void on_filterCombo_currentIndexChanged(int index);
-
-    // Слот для выделения
-    void on_tableView_clicked(const QModelIndex &index);
-
-    // Слот для открытия формы нового контрагента
-//    void onOpenContragentsList();
-
-
+    explicit ContragentDialog(QWidget *parent = nullptr);
+    ~ContragentDialog();
 
 private:
-    Ui::ContragentsListDialog *ui;
-
-//    ContragentDialog *m_contragentDialog = nullptr;  // forma novogo kontragenta
-
-
-    void setupTableView();        // настройка внешнего вида
-    void setupProxyModel();       // настройка прокси-модели
-    void updateButtonState();     // обновление состояния кнопок
-
-    QSqlTableModel *m_model;             // модель
-    QSortFilterProxyModel *m_proxyModel; // прокси для фильтрации
-
-
-
+    Ui::ContragentDialog *ui;
 };
 
-#endif // CONTRAGENTSLISTDIALOG_H
+#endif // CONTRAGENTDIALOG_H
