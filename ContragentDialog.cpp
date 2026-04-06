@@ -18,7 +18,7 @@ void ContragentDialog::setData(const ContragentData &data)
 {
     ui->id_Edit->setText(QString::number(data.id));
     ui->name_Edit->setText(data.name);
-    ui->address_Edit->setText(data.adress);
+    ui->address_Edit->setText(data.address);
     ui->email_Edit->setText(data.e_mail);
     ui->phone_Edit->setText(QString::number(data.phone));
     ui->contactPerson_Edit->setText(data.contactPerson);
@@ -38,6 +38,8 @@ void ContragentDialog::on_ok_Bttn_clicked()
     if (ui->id_Edit->text().toInt() == ISNEWCONTRAGENT)
     {
         DatabaseManager::instance().addContragent(data);
+
+        dfgf
     }
     else
     {
@@ -53,7 +55,7 @@ ContragentData ContragentDialog::getData()
 
     result.id = ui->id_Edit->text().toInt();
     result.name = ui->name_Edit->text();
-    result.adress = ui->address_Edit->text();
+    result.address = ui->address_Edit->text();
     result.e_mail = ui->email_Edit->text();
     result.phone = ui->phone_Edit->text().toLongLong();
     result.contactPerson = ui->contactPerson_Edit->text();

@@ -23,4 +23,5 @@
 * phone (longint)            *
 * contactPerson (str)        *
 * contactPhone (longint)     *
+* is_active (INTEGER)        *
 ******************************

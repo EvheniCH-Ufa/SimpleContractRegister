@@ -10,11 +10,12 @@ struct ContragentData
 {
     long long id;
     QString name;
-    QString adress;
+    QString address;
     QString e_mail;
     long long phone;
     QString contactPerson;
     long long contactPhone;
+    int is_active;
 };
 
 
@@ -46,9 +47,10 @@ public:
     bool checkTables();
 
     // CRUD операции для Контрагента SQL
-    bool addContragent(const ContragentData& data);
-    bool updateContragent(const ContragentData& data);
-    bool deleteContragent(int id);
+    long long   addContragent(const ContragentData& data);
+    bool        updateContragent(const ContragentData& data);
+    bool        deleteContragent(int id);
+    bool        restoreContragent(int id);
 
 private:
     DatabaseManager();

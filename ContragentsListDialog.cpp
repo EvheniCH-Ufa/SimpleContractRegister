@@ -25,8 +25,6 @@ ContragentsListDialog::ContragentsListDialog(QWidget *parent)
     ui->contragentTableView->setModel(m_model);
 
     setupTableView(); // настройка вида таблицы
-
-
 }
 
 ContragentsListDialog::~ContragentsListDialog()
@@ -131,7 +129,7 @@ void ContragentsListDialog::on_editContragent_Bttn_clicked()
     const auto model = ui->contragentTableView->model();
     data.id            = model->data(model->index(row, 0)).toLongLong();   // колонка с id
     data.name          = model->data(model->index(row, 1)).toString();      // колонка с именем
-    data.adress        = model->data(model->index(row, 2)).toString();
+    data.address       = model->data(model->index(row, 2)).toString();
     data.e_mail        = model->data(model->index(row, 3)).toString();
     data.phone         = model->data(model->index(row, 4)).toULongLong();
     data.contactPerson = model->data(model->index(row, 5)).toString();

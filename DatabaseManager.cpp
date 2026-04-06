@@ -143,32 +143,164 @@ bool DatabaseManager::checkTables()
             && createContragentsTable();
 }
 
-bool DatabaseManager::addContragent(const ContragentData &data)
-{
 
-    Сделать CRUD операции для Контрагента
+
+
+// BEGIN ================ CRUD операции для Контрагента ========== BEGIN
+
+bool DatabaseManager::createContragentsTable()
+{
+    if (!isOpen())
+    {
+        return false;
+    }
 
     QSqlQuery query(m_database);
     const QString tableName = "Contragents";
 
-    query.exec("INSERT INTO " + tableName + " (name) VALUES ('One')");
+    bool success = query.exec(
+            "CREATE TABLE IF NOT EXISTS " + tableName + " ("
+            "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+            "name            TEXT NOT NULL UNIQUE, "
+            "adress          TEXT,"
+            "e_mail          TEXT,"
+            "phone           INTEGER,"
+            "contactPerson   TEXT,"
+            "contactPhone    INTEGER,"
+            "is_active       INTEGER DEFAULT 1"
+            ")");
 
+/*
+******************************
+*       Contragents          *
+******************************
+* id (uint)                  *
+* name (str)                 *
+* adress (str)               *
+* e_mail (str)               *
+* phone (longint)            *
+* contactPerson (str)        *
+* contactPhone (longint)     *
+******************************
 
-    QMessageBox::warning(nullptr, "Error", "Add contragent!!!   " + data.name);
-    return  false;
+*/
+
+    if (success)
+    {
+        QSqlQuery checkTableQuery( "SELECT COUNT(*) FROM " + tableName, m_database);
+        if (checkTableQuery.next() && checkTableQuery.value(0).toInt() == 0) // выборка есть и количество 0
+        {
+            query.exec("INSERT INTO " + tableName + " (name) VALUES ('One')");
+            query.exec("INSERT INTO " + tableName + " (name) VALUES ('Two')");
+        }
+    }
+    return  success;
+}
+
+long long DatabaseManager::addContragent(const ContragentData &data)
+{
+    QSqlQuery query(m_database);
+    query.prepare
+            (
+                "INSERT INTO contragents (name, address, email, phone, contact_person, contact_phone) "
+                "VALUES (:name, :address, :email, :phone, :contact_person, :contact_phone)"
+            );
+
+    query.bindValue(":name", data.name);
+    query.bindValue(":address", data.address);
+    query.bindValue(":email", data.e_mail);
+    query.bindValue(":phone", data.phone);
+    query.bindValue(":contact_person", data.contactPerson);
+    query.bindValue(":contact_phone", data.contactPhone);
+
+    if (!query.exec())
+    {
+        qDebug() << "Ошибка добавления:" << query.lastError().text();
+        QMessageBox::warning(nullptr, "Ошибка добавления", query.lastError().text());
+        return -1;
+    }
+
+    // Получить сгенерированный ID
+    return query.lastInsertId().toLongLong();
 }
 
 bool DatabaseManager::updateContragent(const ContragentData &data)
 {
-    QMessageBox::warning(nullptr, "Error", "Update contragent!!!   " + data.name);
-    return  false;
+    QSqlQuery query(m_database);
+    query.prepare
+            (
+                "UPDATE contragents SET "
+                "name = :name, "
+                "address = :address, "
+                "email = :email, "
+                "phone = :phone, "
+                "contact_person = :contact_person, "
+                "contact_phone = :contact_phone "
+                "WHERE id = :id"
+            );
+
+    query.bindValue(":id", data.id);
+    query.bindValue(":name", data.name);
+    query.bindValue(":address", data.address);
+    query.bindValue(":email", data.e_mail);
+    query.bindValue(":phone", data.phone);
+    query.bindValue(":contact_person", data.contactPerson);
+    query.bindValue(":contact_phone", data.contactPhone);
+
+    if (!query.exec())
+    {
+        qDebug() << "Ошибка обновления:" << query.lastError().text();
+        QMessageBox::warning(nullptr, "Ошибка обновления", query.lastError().text());
+        return false;
+    }
+
+    return query.numRowsAffected() > 0;
 }
 
 bool DatabaseManager::deleteContragent(int id)
 {
-    QMessageBox::warning(nullptr, "Error", "Update contragent!!!   " + QString::number(id));
-    return  false;
+    QSqlQuery query(m_database);
+    query.prepare
+            (
+                "UPDATE contragents SET "
+                "is_active = 0 "
+                "WHERE id = :id"
+            );
+
+    query.bindValue(":id", id);
+
+    if (!query.exec())
+    {
+        qDebug() << "Ошибка мягкого удаления:" << query.lastError().text();
+        QMessageBox::warning(nullptr, "Ошибка мягкого удаления", query.lastError().text());
+        return false;
+    }
+
+    return query.numRowsAffected() > 0;
 }
+
+bool DatabaseManager::restoreContragent(int id)
+{
+    QSqlQuery query(m_database);
+    query.prepare
+            (
+                "UPDATE contragents SET "
+                "is_active = 1 "
+                "WHERE id = :id"
+            );
+
+    query.bindValue(":id", id);
+
+    if (!query.exec())
+    {
+        qDebug() << "Ошибка мягкого удаления:" << query.lastError().text();
+        QMessageBox::warning(nullptr, "Ошибка мягкого удаления", query.lastError().text());
+        return false;
+    }
+
+    return query.numRowsAffected() > 0;
+}
+// END ================ CRUD операции для Контрагента ========== END
 
 bool DatabaseManager::createContractsTable()
 {
@@ -205,51 +337,5 @@ bool DatabaseManager::createContractsTable()
     return  success;
 }
 
-bool DatabaseManager::createContragentsTable()
-{
-    if (!isOpen())
-    {
-        return false;
-    }
 
-    QSqlQuery query(m_database);
-    const QString tableName = "Contragents";
-
-    bool success = query.exec(
-            "CREATE TABLE IF NOT EXISTS " + tableName + " ("
-            "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-            "name            TEXT NOT NULL UNIQUE, "
-            "adress          TEXT,"
-            "e_mail          TEXT,"
-            "phone           INTEGER,"
-            "contactPerson   TEXT,"
-            "contactPhone    INTEGER"
-            ")");
-
-/*
-******************************
-*       Contragents          *
-******************************
-* id (uint)                  *
-* name (str)                 *
-* adress (str)               *
-* e_mail (str)               *
-* phone (longint)            *
-* contactPerson (str)        *
-* contactPhone (longint)     *
-******************************
-
-*/
-
-    if (success)
-    {
-        QSqlQuery checkTableQuery( "SELECT COUNT(*) FROM " + tableName, m_database);
-        if (checkTableQuery.next() && checkTableQuery.value(0).toInt() == 0) // выборка есть и количество 0
-        {
-            query.exec("INSERT INTO " + tableName + " (name) VALUES ('One')");
-            query.exec("INSERT INTO " + tableName + " (name) VALUES ('Two')");
-        }
-    }
-    return  success;
-}
 
