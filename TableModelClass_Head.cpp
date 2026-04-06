@@ -6,7 +6,7 @@ TableModel_Head::TableModel_Head(QObject *parent, QSqlDatabase database)
     : QSqlTableModel(parent, database)
 {
     qDebug() << "initialize()\n";
-    QMessageBox::warning(nullptr, "sdf", "dgfsd");
+    //QMessageBox::warning(nullptr, "sdf", "dgfsd");
     initialize();
 }
 
@@ -34,11 +34,11 @@ QVariant TableModel_Head::data(const QModelIndex &index, int role) const
         {
             case 0: // номер строки
             {
-                return QString("₽ %1").arg(QSqlTableModel::data(index).toDouble(), 0, 'f', 2);
+                //return QString("₽ %1").arg(QSqlTableModel::data(index).toDouble(), 0, 'f', 2);
             }
             case 1: // пока просто другое
             {
-                return QString("₽ %1").arg(QSqlTableModel::data(index).toDouble(), 0, 'f', 2);
+//                return QString("₽ %1").arg(QSqlTableModel::data(index).toDouble(), 0, 'f', 2);
             }
             default: break;
         }

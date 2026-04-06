@@ -1,7 +1,7 @@
 #include "ContragentsListDialog.h"
 #include "ui_ContragentsListDialog.h"
 #include "DatabaseManager.h"
-#include "QMessageBox"
+#include <QMessageBox>
 
 
 ContragentsListDialog::ContragentsListDialog(QWidget *parent)
@@ -106,11 +106,10 @@ void ContragentsListDialog::updateButtonState()
 
 }
 
-
-
 void ContragentsListDialog::on_addContragent_Bttn_clicked()
 {
-   m_contragentDialog->exec();
+    m_contragentDialog->setWindowTitle("Добавление нового контрагента ");
+    m_contragentDialog->exec();
 }
 
 void ContragentsListDialog::on_editContragent_Bttn_clicked()
@@ -127,10 +126,10 @@ void ContragentsListDialog::on_editContragent_Bttn_clicked()
     QModelIndex index = selectedRows.first();
     int row = index.row();
 
-    contragentData data;
+    ContragentData data;
     // Получаем данные из модели
     const auto model = ui->contragentTableView->model();
-    data.id            = model->data(model->index(row, 0)).toString().toULongLong();   // колонка с id
+    data.id            = model->data(model->index(row, 0)).toLongLong();   // колонка с id
     data.name          = model->data(model->index(row, 1)).toString();      // колонка с именем
     data.adress        = model->data(model->index(row, 2)).toString();
     data.e_mail        = model->data(model->index(row, 3)).toString();
@@ -141,5 +140,8 @@ void ContragentsListDialog::on_editContragent_Bttn_clicked()
     m_contragentDialog->setData(data);
     m_contragentDialog->setWindowTitle("Изменение контрагента " + data.name);
 
-    m_contragentDialog->exec();
+    if (m_contragentDialog->exec() == QDialog::Accepted)
+    {
+        QMessageBox::warning(this, "Warning", "Neobhodimo obnovit' table!!!");
+    }
 }

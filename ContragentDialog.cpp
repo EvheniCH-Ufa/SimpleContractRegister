@@ -14,7 +14,7 @@ ContragentDialog::~ContragentDialog()
     delete ui;
 }
 
-void ContragentDialog::setData(const contragentData &data)
+void ContragentDialog::setData(const ContragentData &data)
 {
     ui->id_Edit->setText(QString::number(data.id));
     ui->name_Edit->setText(data.name);
@@ -30,8 +30,34 @@ void ContragentDialog::on_cancel_Bttn_clicked()
     close();
 }
 
+const int ISNEWCONTRAGENT = - 1;
 void ContragentDialog::on_ok_Bttn_clicked()
 {
+    ContragentData data = getData();
 
-    close();
+    if (ui->id_Edit->text().toInt() == ISNEWCONTRAGENT)
+    {
+        DatabaseManager::instance().addContragent(data);
+    }
+    else
+    {
+        DatabaseManager::instance().updateContragent(data);
+    }
+
+    accept();
+}
+
+ContragentData ContragentDialog::getData()
+{
+    ContragentData result;
+
+    result.id = ui->id_Edit->text().toInt();
+    result.name = ui->name_Edit->text();
+    result.adress = ui->address_Edit->text();
+    result.e_mail = ui->email_Edit->text();
+    result.phone = ui->phone_Edit->text().toLongLong();
+    result.contactPerson = ui->contactPerson_Edit->text();
+    result.contactPhone = ui->contactPersonPhone_Edit->text().toLongLong();
+
+    return  result;
 }

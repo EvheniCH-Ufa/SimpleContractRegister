@@ -6,7 +6,7 @@
 #include <QMutex>
 
 
-struct contragentData
+struct ContragentData
 {
     long long id;
     QString name;
@@ -44,6 +44,11 @@ public:
     bool rollbackTransaction();
 
     bool checkTables();
+
+    // CRUD операции для Контрагента SQL
+    bool addContragent(const ContragentData& data);
+    bool updateContragent(const ContragentData& data);
+    bool deleteContragent(int id);
 
 private:
     DatabaseManager();

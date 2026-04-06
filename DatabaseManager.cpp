@@ -1,5 +1,7 @@
 #include "DatabaseManager.h"
 
+#include <QMessageBox> // для помощи - удалить
+
 DatabaseManager* DatabaseManager::m_instance = nullptr;
 QMutex DatabaseManager::m_mutex;
 
@@ -141,6 +143,33 @@ bool DatabaseManager::checkTables()
             && createContragentsTable();
 }
 
+bool DatabaseManager::addContragent(const ContragentData &data)
+{
+
+    Сделать CRUD операции для Контрагента
+
+    QSqlQuery query(m_database);
+    const QString tableName = "Contragents";
+
+    query.exec("INSERT INTO " + tableName + " (name) VALUES ('One')");
+
+
+    QMessageBox::warning(nullptr, "Error", "Add contragent!!!   " + data.name);
+    return  false;
+}
+
+bool DatabaseManager::updateContragent(const ContragentData &data)
+{
+    QMessageBox::warning(nullptr, "Error", "Update contragent!!!   " + data.name);
+    return  false;
+}
+
+bool DatabaseManager::deleteContragent(int id)
+{
+    QMessageBox::warning(nullptr, "Error", "Update contragent!!!   " + QString::number(id));
+    return  false;
+}
+
 bool DatabaseManager::createContractsTable()
 {
     if (!isOpen())
@@ -169,8 +198,8 @@ bool DatabaseManager::createContractsTable()
         QSqlQuery checkTableQuery( "SELECT COUNT(*) FROM " + tableName, m_database);
         if (checkTableQuery.next() && checkTableQuery.value(0).toInt() == 0) // выборка есть и количество 0
         {
-            query.exec("INSERT INTO " + tableName + " (number) VALUES ('One')");
-            query.exec("INSERT INTO " + tableName + " (number) VALUES ('Two')");
+            query.exec("INSERT INTO " + tableName + " (number) VALUES ('One1')");
+            query.exec("INSERT INTO " + tableName + " (number) VALUES ('Two2')");
         }
     }
     return  success;

@@ -16,7 +16,7 @@ public:
     explicit ContragentDialog(QWidget *parent = nullptr);
     ~ContragentDialog();
 
-    void setData(const contragentData &data);
+    void setData(const ContragentData &data);
 
 private slots:
     void on_cancel_Bttn_clicked();
@@ -25,6 +25,8 @@ private slots:
 
 private:
     Ui::ContragentDialog *ui;
+
+    ContragentData getData();
 
 };
 
