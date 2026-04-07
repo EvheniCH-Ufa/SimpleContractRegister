@@ -37,16 +37,18 @@ void ContragentDialog::on_ok_Bttn_clicked()
 
     if (ui->id_Edit->text().toInt() == ISNEWCONTRAGENT)
     {
-        DatabaseManager::instance().addContragent(data);
-
-        dfgf
+        if (DatabaseManager::instance().addContragent(data) >= 0)
+        {
+            accept();
+        }
     }
     else
     {
-        DatabaseManager::instance().updateContragent(data);
+        if (DatabaseManager::instance().updateContragent(data))
+        {
+            accept();
+        }
     }
-
-    accept();
 }
 
 ContragentData ContragentDialog::getData()

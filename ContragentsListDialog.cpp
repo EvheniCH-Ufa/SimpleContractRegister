@@ -106,6 +106,8 @@ void ContragentsListDialog::updateButtonState()
 
 void ContragentsListDialog::on_addContragent_Bttn_clicked()
 {
+
+    ertert
     m_contragentDialog->setWindowTitle("Добавление нового контрагента ");
     m_contragentDialog->exec();
 }
@@ -140,6 +142,12 @@ void ContragentsListDialog::on_editContragent_Bttn_clicked()
 
     if (m_contragentDialog->exec() == QDialog::Accepted)
     {
-        QMessageBox::warning(this, "Warning", "Neobhodimo obnovit' table!!!");
+        m_model->select();
+        //QMessageBox::warning(this, "Warning", "Neobhodimo obnovit' table!!!");
     }
+}
+
+void ContragentsListDialog::on_refreshContragent_Bttn_clicked()
+{
+    m_model->select();
 }

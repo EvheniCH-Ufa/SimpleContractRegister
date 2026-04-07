@@ -46,6 +46,8 @@ private slots:
 
     void on_editContragent_Bttn_clicked();
 
+    void on_refreshContragent_Bttn_clicked();
+
 private:
     Ui::ContragentsListDialog *ui;
 

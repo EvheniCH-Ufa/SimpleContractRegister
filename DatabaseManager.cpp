@@ -158,15 +158,18 @@ bool DatabaseManager::createContragentsTable()
     QSqlQuery query(m_database);
     const QString tableName = "Contragents";
 
+  //  bool success1 = query.exec(
+  //          "DROP TABLE IF EXISTS " + tableName);
+
     bool success = query.exec(
             "CREATE TABLE IF NOT EXISTS " + tableName + " ("
             "id INTEGER PRIMARY KEY AUTOINCREMENT, "
             "name            TEXT NOT NULL UNIQUE, "
-            "adress          TEXT,"
+            "address         TEXT,"
             "e_mail          TEXT,"
             "phone           INTEGER,"
-            "contactPerson   TEXT,"
-            "contactPhone    INTEGER,"
+            "contact_person  TEXT,"
+            "contact_phone   INTEGER,"
             "is_active       INTEGER DEFAULT 1"
             ")");
 
@@ -176,7 +179,7 @@ bool DatabaseManager::createContragentsTable()
 ******************************
 * id (uint)                  *
 * name (str)                 *
-* adress (str)               *
+* address (str)              *
 * e_mail (str)               *
 * phone (longint)            *
 * contactPerson (str)        *
@@ -202,13 +205,13 @@ long long DatabaseManager::addContragent(const ContragentData &data)
     QSqlQuery query(m_database);
     query.prepare
             (
-                "INSERT INTO contragents (name, address, email, phone, contact_person, contact_phone) "
-                "VALUES (:name, :address, :email, :phone, :contact_person, :contact_phone)"
+                "INSERT INTO contragents ( name,  address,  e_mail,  phone,  contact_person,  contact_phone) "
+                "VALUES                  (:name, :address, :e_mail, :phone, :contact_person, :contact_phone) "
             );
 
     query.bindValue(":name", data.name);
     query.bindValue(":address", data.address);
-    query.bindValue(":email", data.e_mail);
+    query.bindValue(":e_mail", data.e_mail);
     query.bindValue(":phone", data.phone);
     query.bindValue(":contact_person", data.contactPerson);
     query.bindValue(":contact_phone", data.contactPhone);
@@ -232,7 +235,7 @@ bool DatabaseManager::updateContragent(const ContragentData &data)
                 "UPDATE contragents SET "
                 "name = :name, "
                 "address = :address, "
-                "email = :email, "
+                "e_mail = :e_mail, "
                 "phone = :phone, "
                 "contact_person = :contact_person, "
                 "contact_phone = :contact_phone "
@@ -242,7 +245,7 @@ bool DatabaseManager::updateContragent(const ContragentData &data)
     query.bindValue(":id", data.id);
     query.bindValue(":name", data.name);
     query.bindValue(":address", data.address);
-    query.bindValue(":email", data.e_mail);
+    query.bindValue(":e_mail", data.e_mail);
     query.bindValue(":phone", data.phone);
     query.bindValue(":contact_person", data.contactPerson);
     query.bindValue(":contact_phone", data.contactPhone);
