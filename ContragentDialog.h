@@ -17,6 +17,7 @@ public:
     ~ContragentDialog();
 
     void setData(const ContragentData &data);
+    void clearData();
 
 private slots:
     void on_cancel_Bttn_clicked();

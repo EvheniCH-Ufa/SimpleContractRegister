@@ -1,6 +1,6 @@
 #include "ContragentDialog.h"
 #include "ui_ContragentDialog.h"
-
+#include <QMessageBox>
 
 ContragentDialog::ContragentDialog(QWidget *parent) :
     QDialog(parent),
@@ -25,6 +25,17 @@ void ContragentDialog::setData(const ContragentData &data)
     ui->contactPersonPhone_Edit->setText(QString::number(data.contactPhone));
 }
 
+void ContragentDialog::clearData()
+{
+    ui->id_Edit->setText(QString::number(-1));
+    ui->name_Edit->clear();
+    ui->address_Edit->clear();
+    ui->email_Edit->clear();
+    ui->phone_Edit->clear();
+    ui->contactPerson_Edit->clear();
+    ui->contactPersonPhone_Edit->clear();
+}
+
 void ContragentDialog::on_cancel_Bttn_clicked()
 {
     close();
@@ -37,7 +48,8 @@ void ContragentDialog::on_ok_Bttn_clicked()
 
     if (ui->id_Edit->text().toInt() == ISNEWCONTRAGENT)
     {
-        if (DatabaseManager::instance().addContragent(data) >= 0)
+        auto res = DatabaseManager::instance().addContragent(data);
+        if (res >= 0)
         {
             accept();
         }
