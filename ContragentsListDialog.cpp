@@ -26,6 +26,7 @@ ContragentsListDialog::ContragentsListDialog(QWidget *parent)
     ui->contragentTableView->setModel(m_model);
 
     setupTableView(); // настройка вида таблицы
+    setFormMode(FormMode::ModeNormal); // настройка вида кнопок
 }
 
 ContragentsListDialog::~ContragentsListDialog()
@@ -99,6 +100,58 @@ int ContragentsListDialog::getSelectedTableRow()
     return index.row();
 }
 
+void ContragentsListDialog::setFormMode(const FormMode &formMode)
+{
+    m_formMode = formMode;
+
+    /*
+                восстановить    обновить    добавить    удалить    изменить    выбрать
+
+    нормальный	     ДА            ДА          ДА          ДА          ДА         НЕ
+
+    ресторе 	     ДА            НЕ          НЕ          НЕ          НЕ         НЕ
+
+    выбор		     НЕ            ДА          НЕ          НЕ          НЕ         ДА
+
+    */
+
+
+    switch (m_formMode)
+    {
+        case FormMode::ModeNormal:
+            ui->restoreContragent_Bttn->setVisible(true);
+            ui->refreshContragent_Bttn->setVisible(true);
+            ui->addContragent_Bttn->setVisible(true);
+            ui->delContragent_Bttn->setVisible(true);
+            ui->editContragent_Bttn->setVisible(true);
+            ui->selectContragent_Bttn->setVisible(false);
+            break;
+
+        case FormMode::ModeRestore:  цуаыв
+            ui->restoreContragent_Bttn->setVisible(true);
+            ui->refreshContragent_Bttn->setVisible(true);
+            ui->addContragent_Bttn->setVisible(true);
+            ui->delContragent_Bttn->setVisible(true);
+            ui->editContragent_Bttn->setVisible(true);
+            ui->selectContragent_Bttn->setVisible(false);
+            break;
+
+        case FormMode::ModeSelection:
+            ui->restoreContragent_Bttn->setVisible(true);
+            ui->refreshContragent_Bttn->setVisible(true);
+            ui->addContragent_Bttn->setVisible(true);
+            ui->delContragent_Bttn->setVisible(true);
+            ui->editContragent_Bttn->setVisible(true);
+            ui->selectContragent_Bttn->setVisible(false);
+            break;
+        }
+}
+
+FormMode ContragentsListDialog::getFormMode() const
+{
+    return m_formMode;
+}
+
 ContragentData ContragentsListDialog::getDataFromSelectedRow(int row)
 {
     ContragentData data;
@@ -148,7 +201,19 @@ void ContragentsListDialog::on_editContragent_Bttn_clicked()
 
 void ContragentsListDialog::on_refreshContragent_Bttn_clicked()
 {
+    m_model->setFilter("is_active = 1");
     m_model->select();
+    /*
+    режим меняем на ресторе
+    если повторное восстановление - восстановить и сменить режим и
+
+
+меняем фильтр на такой, селект
+
+     тут режим обычный и ресторе
+
+
+     */
 }
 
 void ContragentsListDialog::on_delContragent_Bttn_clicked()
@@ -163,4 +228,9 @@ void ContragentsListDialog::on_delContragent_Bttn_clicked()
 
     DatabaseManager::instance().deleteContragent(data.id);
     m_model->select();
+}
+
+void ContragentsListDialog::on_restoreContragent_Bttn_clicked()
+{
+
 }

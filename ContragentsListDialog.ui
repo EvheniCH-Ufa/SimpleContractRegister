@@ -47,6 +47,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="restoreContragent_Bttn">
+         <property name="text">
+          <string>Восстановить</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -60,14 +67,14 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="refreshContragent_Bttn_3">
+        <widget class="QPushButton" name="selectContragent_Bttn">
          <property name="text">
           <string>Выбрать</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="refreshContragent_Bttn_2">
+        <widget class="QPushButton" name="closeContragent_Bttn">
          <property name="text">
           <string>Закрыть</string>
          </property>

@@ -15,6 +15,13 @@ namespace Ui {
 class ContragentsListDialog;
 }
 
+enum class FormMode
+{
+    ModeNormal,
+    ModeRestore,
+    ModeSelection
+};
+
 class ContragentsListDialog : public QDialog
 {
     Q_OBJECT
@@ -22,6 +29,9 @@ class ContragentsListDialog : public QDialog
 public:
     explicit ContragentsListDialog(QWidget *parent = nullptr);
     ~ContragentsListDialog();
+
+    FormMode getFormMode() const;
+    void setFormMode(const FormMode &formMode);
 
 private slots:
     // Слоты для фильтрации
@@ -40,6 +50,8 @@ private slots:
     void on_refreshContragent_Bttn_clicked();
     void on_delContragent_Bttn_clicked();
 
+    void on_restoreContragent_Bttn_clicked();
+
 private:
     Ui::ContragentsListDialog *ui;
 
@@ -54,6 +66,8 @@ private:
     QSortFilterProxyModel *m_proxyModel; // прокси для фильтрации
 
     int getSelectedTableRow();
+    FormMode m_formMode = FormMode::ModeNormal;
+
     ContragentData getDataFromSelectedRow(int row);
 };
 
