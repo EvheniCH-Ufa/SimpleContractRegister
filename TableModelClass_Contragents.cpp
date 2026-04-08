@@ -16,7 +16,8 @@ void TableModel_Contragents::initialize()
     setHeaderData(3, Qt::Horizontal, "e_mail");
     setHeaderData(4, Qt::Horizontal, "Телефон");
     setHeaderData(5, Qt::Horizontal, "Контактное лицо");
-    setHeaderData(6, Qt::Horizontal, "Телефон контактного\nлица");
+    setHeaderData(6, Qt::Horizontal, "Телефон\nконтактного\nлица");
+    setHeaderData(7, Qt::Horizontal, "Активен");
     setEditStrategy(QSqlTableModel::OnFieldChange);
     select();
 
