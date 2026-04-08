@@ -24,12 +24,6 @@ public:
     ~ContragentsListDialog();
 
 private slots:
-    // Слоты для кнопок
-    void on_addContract_Bttn_clicked();
-    void on_delContract_Bttn_clicked();
-    void on_editContract_Bttn_clicked();
-    void on_refreshContract_Bttn_clicked();
-
     // Слоты для фильтрации
     void on_searchEdit_textChanged(const QString &text);
     void on_filterCombo_currentIndexChanged(int index);
@@ -40,14 +34,10 @@ private slots:
     // Слот для открытия формы нового контрагента
 //    void onOpenContragentsList();
 
-
-
+    // Слоты для кнопок
     void on_addContragent_Bttn_clicked();
-
     void on_editContragent_Bttn_clicked();
-
     void on_refreshContragent_Bttn_clicked();
-
     void on_delContragent_Bttn_clicked();
 
 private:
@@ -63,8 +53,8 @@ private:
     QSqlTableModel *m_model;             // модель
     QSortFilterProxyModel *m_proxyModel; // прокси для фильтрации
 
-
-
+    int getSelectedTableRow();
+    ContragentData getDataFromSelectedRow(int row);
 };
 
 #endif // CONTRAGENTSLISTDIALOG_H
