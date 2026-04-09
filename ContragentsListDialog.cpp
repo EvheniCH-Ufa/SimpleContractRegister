@@ -102,19 +102,18 @@ int ContragentsListDialog::getSelectedTableRow()
 
 void ContragentsListDialog::setFormMode(const FormMode &formMode)
 {
+    if (m_formMode == formMode)
+    {
+        return;
+    }
     m_formMode = formMode;
 
     /*
                 восстановить    обновить    добавить    удалить    изменить    выбрать
-
     нормальный	     ДА            ДА          ДА          ДА          ДА         НЕ
-
     ресторе 	     ДА            НЕ          НЕ          НЕ          НЕ         НЕ
-
     выбор		     НЕ            ДА          НЕ          НЕ          НЕ         ДА
-
     */
-
 
     switch (m_formMode)
     {
@@ -125,24 +124,45 @@ void ContragentsListDialog::setFormMode(const FormMode &formMode)
             ui->delContragent_Bttn->setVisible(true);
             ui->editContragent_Bttn->setVisible(true);
             ui->selectContragent_Bttn->setVisible(false);
+
+            if (m_model->filter() == QString("is_active = 1"))
+            {
+                break;
+            }
+            m_model->setFilter("is_active = 1");
+            m_model->select();
             break;
 
-        case FormMode::ModeRestore:  цуаыв
+        case FormMode::ModeRestore:
             ui->restoreContragent_Bttn->setVisible(true);
             ui->refreshContragent_Bttn->setVisible(true);
-            ui->addContragent_Bttn->setVisible(true);
-            ui->delContragent_Bttn->setVisible(true);
-            ui->editContragent_Bttn->setVisible(true);
+            ui->addContragent_Bttn->setVisible(false);
+            ui->delContragent_Bttn->setVisible(false);
+            ui->editContragent_Bttn->setVisible(false);
             ui->selectContragent_Bttn->setVisible(false);
+
+            if (m_model->filter() == QString("is_active = 0"))
+            {
+                break;
+            }
+            m_model->setFilter("is_active = 0");
+            m_model->select();
             break;
 
         case FormMode::ModeSelection:
-            ui->restoreContragent_Bttn->setVisible(true);
+            ui->restoreContragent_Bttn->setVisible(false);
             ui->refreshContragent_Bttn->setVisible(true);
             ui->addContragent_Bttn->setVisible(true);
             ui->delContragent_Bttn->setVisible(true);
             ui->editContragent_Bttn->setVisible(true);
-            ui->selectContragent_Bttn->setVisible(false);
+            ui->selectContragent_Bttn->setVisible(true);
+
+            if (m_model->filter() == QString("is_active = 1"))
+            {
+                break;
+            }
+            m_model->setFilter("is_active = 1");
+            m_model->select();
             break;
         }
 }
@@ -201,19 +221,7 @@ void ContragentsListDialog::on_editContragent_Bttn_clicked()
 
 void ContragentsListDialog::on_refreshContragent_Bttn_clicked()
 {
-    m_model->setFilter("is_active = 1");
     m_model->select();
-    /*
-    режим меняем на ресторе
-    если повторное восстановление - восстановить и сменить режим и
-
-
-меняем фильтр на такой, селект
-
-     тут режим обычный и ресторе
-
-
-     */
 }
 
 void ContragentsListDialog::on_delContragent_Bttn_clicked()
@@ -231,6 +239,19 @@ void ContragentsListDialog::on_delContragent_Bttn_clicked()
 }
 
 void ContragentsListDialog::on_restoreContragent_Bttn_clicked()
-{
+{sdgfdg
+    if (m_formMode == FormMode::ModeNormal)
+    m_model->setFilter("is_active = 1");
+    m_model->select();
+    /*
+    режим меняем на ресторе
+    если повторное восстановление - восстановить и сменить режим и
 
+
+меняем фильтр на такой, селект
+
+     тут режим обычный и ресторе
+
+
+     */
 }
