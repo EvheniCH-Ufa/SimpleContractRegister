@@ -13,7 +13,6 @@ ContragentsListDialog::ContragentsListDialog(QWidget *parent)
 {
     ui->setupUi(this);
 
-
     // sozdanie dialoga novogo kontragenta
     m_contragentDialog = new ContragentDialog(this);
 //    m_contragentDialog->setWindowTitle("Контрагент");
@@ -88,7 +87,6 @@ void ContragentsListDialog::updateButtonState()
 int ContragentsListDialog::getSelectedTableRow()
 {
     QModelIndexList selectedRows = ui->contragentTableView->selectionModel()->selectedRows();
-
     if (selectedRows.isEmpty())
     {
         QMessageBox::warning(this, "Внимание", "Выберите контрагента для редактирования");
@@ -115,6 +113,7 @@ void ContragentsListDialog::setFormMode(const FormMode &formMode)
     выбор		     НЕ            ДА          НЕ          НЕ          НЕ         ДА
     */
 
+//    QMessageBox::warning(nullptr, "pre switch setFormMode", QString::number(static_cast<int>(FormMode::ModeNormal)));
     switch (m_formMode)
     {
         case FormMode::ModeNormal:
@@ -124,6 +123,7 @@ void ContragentsListDialog::setFormMode(const FormMode &formMode)
             ui->delContragent_Bttn->setVisible(true);
             ui->editContragent_Bttn->setVisible(true);
             ui->selectContragent_Bttn->setVisible(false);
+          //     QMessageBox::warning(nullptr, "post set FormMode", QString::number(static_cast<int>(FormMode::ModeNormal)));
 
             if (m_model->filter() == QString("is_active = 1"))
             {
@@ -239,19 +239,29 @@ void ContragentsListDialog::on_delContragent_Bttn_clicked()
 }
 
 void ContragentsListDialog::on_restoreContragent_Bttn_clicked()
-{sdgfdg
+{
     if (m_formMode == FormMode::ModeNormal)
-    m_model->setFilter("is_active = 1");
-    m_model->select();
+    {
+        setFormMode(FormMode::ModeRestore);
+        return;
+    }
+
+    if (m_formMode == FormMode::ModeRestore)
+    {
+        auto row = getSelectedTableRow();
+        if (row < 0)
+        {
+            return;
+        }
+        ContragentData data = getDataFromSelectedRow(row);
+        data.is_active = 1;
+        DatabaseManager::instance().updateContragent(data);
+        setFormMode(FormMode::ModeNormal);
+    }
     /*
     режим меняем на ресторе
     если повторное восстановление - восстановить и сменить режим и
-
-
-меняем фильтр на такой, селект
-
-     тут режим обычный и ресторе
-
-
+    меняем фильтр на такой, селект
+    тут режим обычный и ресторе
      */
 }

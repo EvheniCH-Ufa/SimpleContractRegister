@@ -1,4 +1,4 @@
-#include "TableModelClass_Contragents.h"
+#include "ContragentsTableModelClass.h"
 #include<QMessageBox>
 
 TableModel_Contragents::TableModel_Contragents(QObject *parent, QSqlDatabase database)
@@ -10,7 +10,7 @@ TableModel_Contragents::TableModel_Contragents(QObject *parent, QSqlDatabase dat
 void TableModel_Contragents::initialize()
 {
     setTable("Contragents");
-    setHeaderData(0, Qt::Horizontal, "ID");
+    setHeaderData(0, Qt::Horizontal, "IdD");
     setHeaderData(1, Qt::Horizontal, "Наименование");
     setHeaderData(2, Qt::Horizontal, "Адрес");
     setHeaderData(3, Qt::Horizontal, "e_mail");
@@ -85,7 +85,7 @@ QVariant TableModel_Contragents::headerData(int section, Qt::Orientation orienta
     {
         switch (section)
         {
-            case 0: return "ID";
+            case 0: return "dID";
         /*    case 1: return "ID1";
             case 2: return "ID2";
             case 3: return "ID3";

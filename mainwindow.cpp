@@ -128,16 +128,8 @@ void MainWindow::on_tableView_clicked(const QModelIndex &index)
 
 void MainWindow::onOpenContragentsList()
 {
-    // Создаем экземпляр диалога
- //   ContragentsListDialog dialog(this);
-
-    // Устанавливаем заголовок (опционально)
-  //  dialog.setWindowTitle("Справочник контрагентов");
-
-    // Если нужно передать какие-то данные в форму
-    // dialog.setSomeParameter(value);
-
     // Открываем модально (ждет закрытия)
+    m_contragentsDialog->setFormMode(FormMode::ModeNormal);
     m_contragentsDialog->exec();
 
     // После закрытия можно получить данные из формы

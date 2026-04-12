@@ -238,7 +238,8 @@ bool DatabaseManager::updateContragent(const ContragentData &data)
                 "e_mail = :e_mail, "
                 "phone = :phone, "
                 "contact_person = :contact_person, "
-                "contact_phone = :contact_phone "
+                "contact_phone = :contact_phone, "
+                "is_active = :is_active "
                 "WHERE id = :id"
             );
 
@@ -249,6 +250,7 @@ bool DatabaseManager::updateContragent(const ContragentData &data)
     query.bindValue(":phone", data.phone);
     query.bindValue(":contact_person", data.contactPerson);
     query.bindValue(":contact_phone", data.contactPhone);
+    query.bindValue(":is_active", data.is_active);
 
     if (!query.exec())
     {

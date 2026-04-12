@@ -58,9 +58,8 @@ else()
     ContragentsListDialog.ui
 
     # модель таблицы для списка контрагентов
-    TableModelClass_Contragents.h
-    TableModelClass_Contragents.cpp
-
+    ContragentsTableModelClass.h
+    ContragentsTableModelClass.cpp
 
     ## ФОРМА КОНТРАГЕНТА
     ContragentDialog.cpp

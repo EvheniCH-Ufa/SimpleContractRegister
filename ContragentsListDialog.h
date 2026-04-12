@@ -8,7 +8,7 @@
 #include <QSqlTableModel>
 #include <QSortFilterProxyModel>
 
-#include "TableModelClass_Contragents.h"
+#include "ContragentsTableModelClass.h"
 #include "ContragentDialog.h"
 
 namespace Ui {
@@ -66,7 +66,7 @@ private:
     QSortFilterProxyModel *m_proxyModel; // прокси для фильтрации
 
     int getSelectedTableRow();
-    FormMode m_formMode = FormMode::ModeNormal;
+    FormMode m_formMode;// = FormMode::ModeNormal;
 
     ContragentData getDataFromSelectedRow(int row);
 };
