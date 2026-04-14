@@ -51,15 +51,22 @@ else()
     TableModelClass_Head.h
     TableModelClass_Head.cpp
 
-    ## СПИСОК КОНТРАГЕНТОВ
+    ## СПИСОК КОНТРАГЕНТОВ ----------------------------------------
     # форма списка контрагентов
     ContragentsListDialog.h
     ContragentsListDialog.cpp
     ContragentsListDialog.ui
 
-    # модель таблицы для списка контрагентов
+    # настройка вида таблицы контрагентов через делегата
+    ContragentViewDelegate.h
+    ContragentViewDelegate.cpp
+
+    # модель таблицы + прокси для списка контрагентов
     ContragentsTableModelClass.h
     ContragentsTableModelClass.cpp
+
+    ## СПИСОК КОНТРАГЕНТОВ ----------------------------------------
+
 
     ## ФОРМА КОНТРАГЕНТА
     ContragentDialog.cpp

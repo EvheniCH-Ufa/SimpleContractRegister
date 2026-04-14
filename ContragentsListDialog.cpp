@@ -18,11 +18,14 @@ ContragentsListDialog::ContragentsListDialog(QWidget *parent)
 //    m_contragentDialog->setWindowTitle("Контрагент");
 
     // подключаем модель контрактов
-    m_model = new TableModel_Contragents (this, DatabaseManager::instance().database());
+    m_model = new ContragentsTableModel (this, DatabaseManager::instance().database());
 
     // настраиваем прокси модель
-   // m_proxyModel->setSourceModel(m_model);
-    ui->contragentTableView->setModel(m_model);
+    m_proxyModel->setSourceModel(m_model);
+
+    // подключаем к таблице прокси модель не саму модуль
+    //ui->contragentTableView->setModel(m_model);
+    ui->contragentTableView->setModel(m_proxyModel);
 
     setupTableView(); // настройка вида таблицы
     setFormMode(FormMode::ModeNormal); // настройка вида кнопок
@@ -125,12 +128,20 @@ void ContragentsListDialog::setFormMode(const FormMode &formMode)
             ui->selectContragent_Bttn->setVisible(false);
           //     QMessageBox::warning(nullptr, "post set FormMode", QString::number(static_cast<int>(FormMode::ModeNormal)));
 
-            if (m_model->filter() == QString("is_active = 1"))
+
+            if(m_proxyModel->filterKeyColumn() >= 0 && m_proxyModel->filterRegExp().pattern() == "1")
             {
                 break;
             }
-            m_model->setFilter("is_active = 1");
-            m_model->select();
+            m_proxyModel->setFilterKeyColumn(7);
+            m_proxyModel->setFilterRegExp("1");
+
+/*            if (m_model1->filter() == QString("is_active = 1"))
+            {
+                break;
+            }
+            m_model1->setFilter("is_active = 1");
+            m_model1->select();*/
             break;
 
         case FormMode::ModeRestore:
@@ -141,12 +152,20 @@ void ContragentsListDialog::setFormMode(const FormMode &formMode)
             ui->editContragent_Bttn->setVisible(false);
             ui->selectContragent_Bttn->setVisible(false);
 
+            if(m_proxyModel->filterKeyColumn() >= 0 && m_proxyModel->filterRegExp().pattern() == "0")
+            {
+                break;
+            }
+            m_proxyModel->setFilterKeyColumn(7);
+            m_proxyModel->setFilterRegExp("0");
+
+            /*
             if (m_model->filter() == QString("is_active = 0"))
             {
                 break;
             }
             m_model->setFilter("is_active = 0");
-            m_model->select();
+            m_model->select();*/
             break;
 
         case FormMode::ModeSelection:
@@ -157,12 +176,20 @@ void ContragentsListDialog::setFormMode(const FormMode &formMode)
             ui->editContragent_Bttn->setVisible(true);
             ui->selectContragent_Bttn->setVisible(true);
 
-            if (m_model->filter() == QString("is_active = 1"))
+            if(m_proxyModel->filterKeyColumn() >= 0 && m_proxyModel->filterRegExp().pattern() == "1")
+            {
+                break;
+            }
+            m_proxyModel->setFilterKeyColumn(7);
+            m_proxyModel->setFilterRegExp("1");
+
+
+           /* if (m_model->filter() == QString("is_active = 1"))
             {
                 break;
             }
             m_model->setFilter("is_active = 1");
-            m_model->select();
+            m_model->select();*/
             break;
         }
 }
@@ -234,8 +261,18 @@ void ContragentsListDialog::on_delContragent_Bttn_clicked()
 
     ContragentData data = getDataFromSelectedRow(row);
 
-    DatabaseManager::instance().deleteContragent(data.id);
-    m_model->select();
+    QMessageBox::StandardButton reply =
+            QMessageBox::warning(this,
+                         "Запрос на удаление",
+                         "Вы действительно хотите удалить контрагента\n\""
+                         + data.name + "\"?",
+                         QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+
+    if (reply == QMessageBox::Yes)
+    {
+        DatabaseManager::instance().deleteContragent(data.id);
+        m_model->select();
+    }
 }
 
 void ContragentsListDialog::on_restoreContragent_Bttn_clicked()
@@ -257,6 +294,7 @@ void ContragentsListDialog::on_restoreContragent_Bttn_clicked()
         data.is_active = 1;
         DatabaseManager::instance().updateContragent(data);
         setFormMode(FormMode::ModeNormal);
+        m_model->select();
     }
     /*
     режим меняем на ресторе

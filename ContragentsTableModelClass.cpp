@@ -1,13 +1,18 @@
 #include "ContragentsTableModelClass.h"
 #include<QMessageBox>
 
-TableModel_Contragents::TableModel_Contragents(QObject *parent, QSqlDatabase database)
+ContragentsTableModel::ContragentsTableModel(QObject *parent, QSqlDatabase database)
     : QSqlTableModel(parent, database)
 {    
     initialize();
 }
 
-void TableModel_Contragents::initialize()
+void ContragentsTableModel::refresh()
+{
+    select();
+}
+
+void ContragentsTableModel::initialize()
 {
     setTable("Contragents");
     setHeaderData(0, Qt::Horizontal, "IdD");
@@ -36,8 +41,8 @@ void TableModel_Contragents::initialize()
 ******************************
 */
 }
-
-QVariant TableModel_Contragents::data(const QModelIndex &index, int role) const
+/*
+QVariant ContragentsTableModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
     {
@@ -77,9 +82,9 @@ QVariant TableModel_Contragents::data(const QModelIndex &index, int role) const
         }
     }
     return QSqlTableModel::data(index, role);
-}
-
-QVariant TableModel_Contragents::headerData(int section, Qt::Orientation orientation, int role) const
+}*/
+/*
+QVariant ContragentsTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (orientation == Qt::Horizontal && role == Qt::DisplayRole)
     {
@@ -89,14 +94,15 @@ QVariant TableModel_Contragents::headerData(int section, Qt::Orientation orienta
         /*    case 1: return "ID1";
             case 2: return "ID2";
             case 3: return "ID3";
-            case 4: return "ID4";*/
+            case 4: return "ID4";
             default: break;
         }
     }
     return QSqlTableModel::headerData(section, orientation, role);
 }
-
-void TableModel_Contragents::setDepartmentFilter(int departmentId)
+*/
+/*
+void ContragentsTableModel::setDepartmentFilter(int departmentId)
 {
     if (departmentId > 0)
     {
@@ -107,9 +113,9 @@ void TableModel_Contragents::setDepartmentFilter(int departmentId)
         setFilter("");
     }
     select();
-}
-
-void TableModel_Contragents::searchEmployees(const QString &searchText)
+}*/
+/*
+void ContragentsTableModel::searchEmployees(const QString &searchText)
 {
     if (searchText.isEmpty())
     {
@@ -124,5 +130,28 @@ void TableModel_Contragents::searchEmployees(const QString &searchText)
     select();
 }
 
+*/
 
 
+// ContragentProxy==================================================================================================================================
+
+ContragentProxy::ContragentProxy(QObject *parent)
+{
+
+}
+
+void ContragentProxy::setSearchText(const QString &text)
+{
+
+}
+
+void ContragentProxy::setActiveOnly(bool active)
+{
+
+}
+
+bool ContragentProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
+{
+
+}
+// ContragentProxy==================================================================================================================================

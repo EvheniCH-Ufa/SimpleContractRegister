@@ -11,6 +11,7 @@
 #include "ContragentsTableModelClass.h"
 #include "ContragentDialog.h"
 
+
 namespace Ui {
 class ContragentsListDialog;
 }
